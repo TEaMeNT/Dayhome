@@ -31,13 +31,12 @@ body{
     flex-direction: column;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 15px;
-
-    overflow: hidden;
-    max-height: 60px;
-    transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.lesson_block:first-child {
-    margin-top: 50px;
+
+.add_block {
+    overflow: hidden;
+    max-height: 0px;
+    transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .descr {
