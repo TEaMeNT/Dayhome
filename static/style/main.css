@@ -1,4 +1,5 @@
 body{
+    margin: 0;
     display: block;
     background-color: rgb(234, 234, 234);
 }
@@ -13,7 +14,84 @@ body{
     display: flex;
     margin: 0 auto;
     flex-flow: row wrap;
+}
+
+#tooltip {
+    min-height: 40px;
+    width: 90%;
+    height: 40%;
+    left: 5%;
+    bottom: 10px;
+    position: absolute;
+    flex-direction: column;
+    background-color: #f7f7f7;
+    border-radius: 25px;
+    z-index: 8;
+    opacity: 0;
+    display: none;
+}
+
+#form {
+    padding: 10px;
+    font-size: 20px;
+    font-family: sans-serif;
+    resize: none;
+    height: 100%;
+    background-color: #f7f7f7;
+	border-width: 0px;
+    border-radius: max(1.3vw, 25px);
+    background-position: center center;
+    border-color: #000000;
+    border-style: solid;
+	z-index: 8;
+}
+
+#tooltip._active{
+	animation-fill-mode:forwards;
+	animation-name: row_button_animation;
+	animation-duration: 0.5s;
+	animation-timing-function: cubic-bezier(.19,1,.22,1);
+	display: flex;
+}
+
+.date_block {
+    margin: 5px 5px 0px auto;
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 50px;
+    display: flex;
+    width: fit-content;
+    font-family: sans-serif, 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana;
+    font-size: 18px;
+}
+
+.date {
+    text-align: center;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    border: 0px;
+    border-left: #bababa 1px solid;
+    border-right: #bababa 1px solid;
+    font-size: 15px;
+}
+
+.arrow {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px 
+}
+
+.arrow:first-child {
+    border-radius: 20px 0 0px 20px;
+}
+.arrow:last-child {
+    border-radius: 0 20px 20px 0px;
 }
 
 .main_table {
@@ -29,7 +107,7 @@ body{
     padding: 20px;
     display: flex;
     flex-direction: column;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: sans-serif, 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana;
     font-size: 15px;
 }
 
@@ -58,6 +136,7 @@ body{
     background-color: #00000088;
     position: fixed;
     z-index: 8;
+    top: 0;
 }
 .tooltip_back._active{
     animation-name: row_button_animation1;
@@ -65,6 +144,24 @@ body{
     animation-duration: 1s;
     animation-timing-function: cubic-bezier(.19,1,.22,1);
     animation-fill-mode:backwards;
+}
+
+.a_table_style {
+    cursor: pointer;
+    display: flex;
+    min-height: 70px;
+    width: 100%;
+    border-width: 0px;
+    border-radius: 0 0 25px 25px;
+    background-color: #0260e8;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: max(1.2vw, 19px);
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes row_button_animation1{
@@ -76,30 +173,6 @@ body{
 	}
 }
 
-.tooltip{
-	position: fixed;
-	display: none;
-	top: 5%;
-	left: 5%;
-	width: 90%;
-	height: 90%;
-	background-color: #f7f7f7;
-	border-width: 0px;
-    border-radius: max(1.3vw, 25px);
-    background-position: center center;
-    border-color: #000000;
-    border-style: solid;
-	z-index: 8;
-    padding: 0;
-}
-
-.tooltip._active{
-	animation-fill-mode:backwards;
-	animation-name: row_button_animation;
-	animation-duration: 0.5s;
-	animation-timing-function: cubic-bezier(.19,1,.22,1);
-	display: flex;
-}
 
 @keyframes row_button_animation{
 	0%{
