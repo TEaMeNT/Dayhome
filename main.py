@@ -10,5 +10,9 @@ app.register_blueprint(api_blueprint)
 def index():
     return render_template('main.html')
 
+@app.route('/files')
+def files_list():
+    return render_template('files_list.html')
+
 if __name__ == "__main__":
     app.run(debug=False)

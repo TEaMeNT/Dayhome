@@ -64,7 +64,8 @@ class Day {
     get_day(today, week) {
         let ffuuuuu = new Date(today);
         ffuuuuu.setDate(ffuuuuu.getDate() - 1);
-        return ((week % 2 == 0) + 1) * (ffuuuuu.getDay() + 1);
+        this.num_day = ((week % 2 == 0) * 7) + (ffuuuuu.getDay() + 1);
+        return this.num_day;
     }
 
     change_day(delta) {
@@ -89,11 +90,17 @@ function loadLessons(lessons) {
     if (lessons != null) {
         for (var i = 0; i < lessons.length; i++) {
             //console.log(main_table.childNodes);
-            main_table.insertAdjacentHTML('beforeend', `<div class="lesson_block"><div class="txt">${lessons[i][0]}</div><div class="add_block"><div class="descr"><b>Преподаватель</b>: ${lessons[i][2]}</div><div class="descr"><b>Домашнее задание</b>: none</div><div class="descr"><b>Отмечает на лекциях</b>: ${lessons[i][3]}</div></div></div>`);
+            main_table.insertAdjacentHTML('beforeend', `<div class="lesson_block"><div class="txt">${lessons[i][0]}</div><div class="type"></div><div class="add_block"><div class="descr"><b>Преподаватель</b>: ${lessons[i][2]}</div><div class="descr"><b>Домашнее задание</b>: none</div><div class="descr"><b>Можно пропускать: </b>Нет</div></div></div>`);
         }
         let lesson_blocks = document.getElementsByClassName("lesson_block");
         for (let i = 0; i < lesson_blocks.length; i++) {
-            let add_block = lesson_blocks[i].childNodes[1];
+            if (lessons[i][1]) {
+                lesson_blocks[i].childNodes[1].style.backgroundColor = "mediumpurple";
+            }
+            if (lessons[i][3]) {
+                lesson_blocks[i].childNodes[2].childNodes[2].innerHTML = "<b>Можно пропускать: </b>Да";
+            }
+            let add_block = lesson_blocks[i].childNodes[2];
             let homework = add_block.childNodes[1];
             lesson_blocks[i].firstChild.onclick = function () {
                 let sum_of_heights = 0;
@@ -115,10 +122,13 @@ function loadLessons(lessons) {
             homework.onclick = function() {
                 tooltip.classList.add("_active");
                 tooltip_back.classList.add("_active");
+                tooltip.childNodes[1].textContent = homework.textContent.substring(18);
                 tooltip.childNodes[3].onclick = function() {
                     var data_to_send = [date_selector.value + " " + i, form.value];
                     sendJSON(JSON.stringify(data_to_send), "/api/homework_upd");
                     homework.innerHTML = "<b>Домашнее задание</b>: " + form.value;
+                    tooltip.classList.remove("_active");
+                    tooltip_back.classList.remove("_active");
                 }
             }
         }
@@ -139,7 +149,7 @@ function loadHomework() {
                 data = JSON.parse(xhr.responseText);
                 let lesson_blocks = document.getElementsByClassName("lesson_block");
                 for (let i = 0; i < data.length; i++) {
-                    lesson_blocks[data[i][0]].childNodes[1].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1];
+                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1];
                 }
             }
         }

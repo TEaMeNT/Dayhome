@@ -7,18 +7,41 @@
     <title>Дневник домашнего задания</title>
 </head>
 <body class="page">
+    <input id="menu__toggle" type="checkbox" />
+    <label class="menu__btn" for="menu__toggle">
+        <span></span>
+    </label>
+    <div class="hamburger-menu">
+        <a href="/" class="top_mobile_line_text">
+            <div class="exit_img" style="background-image: url('../static/imgs/diary.png');"></div>
+            &nbsp;
+            Дневник
+        </a>
+        <a href="/files" class="top_mobile_line_text">
+            <div class="exit_img" style="background-image: url('../static/imgs/folder.png');"></div>
+            &nbsp;
+            Файлики
+        </a>
+        <a href="/" class="pages"></a>
+        <a href="/files" class="pages"></a>
+    </div>
+
     <div class="tooltip_back"></div>
     <div id="tooltip">
         <textarea id="form"></textarea>
         <a class="a_table_style">Сохранить</a>
     </div>
+
     <div class="date_block">
         <div class="arrow">&#60;</div>
         <input class="date" type="date" value="2023-09-25"/>
         <div class="arrow">&#62;</div>
     </div>
+
     <div class="container">
-        <div class="main_table"></div>
+        <div class="main_table">
+            <!--Бла бла бла, пары тут крч будут появляться-->
+        </div>
     </div>
     <script src="/static/scripts/main.js"></script>
 </body>
