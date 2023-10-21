@@ -1,0 +1,6 @@
+Flask~=2.2.2
+authlib~=1.2.1
+Werkzeug~=2.3.6
+requests~=2.31.0
+claptcha
+Pillow<=9.5.0
