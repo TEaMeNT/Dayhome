@@ -1,0 +1,9 @@
+.vscode
+venv
+__pycache__
+.idea
+bases/*
+bases/login_password.db
+*login_password.db
+scripts
+log.txt
