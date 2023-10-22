@@ -84,6 +84,25 @@ class Day {
     }
 }
 
+function update_height_block (lesson_block) {
+    let add_block = lesson_block.childNodes[2];
+    let sum_of_heights = 0;
+    for (let j = 0; j < add_block.childNodes.length; j++) {
+        let height = add_block.childNodes[j].offsetHeight;
+        if (height != undefined) {
+            sum_of_heights += height;
+        }
+    };
+    let correct_h = `${30 + sum_of_heights}px`
+
+    if (add_block.style["max-height"] == correct_h) {
+        add_block.style["max-height"] = "0px";
+    }
+    else {
+        add_block.style["max-height"] = correct_h;
+    }
+}
+
 function loadLessons(lessons) {
     main_table.innerHTML = "";
     date_selector.value = current_date.current_str_date;
@@ -103,21 +122,7 @@ function loadLessons(lessons) {
             let add_block = lesson_blocks[i].childNodes[2];
             let homework = add_block.childNodes[1];
             lesson_blocks[i].firstChild.onclick = function () {
-                let sum_of_heights = 0;
-                for (let j = 0; j < add_block.childNodes.length; j++) {
-                    let height = add_block.childNodes[j].offsetHeight;
-                    if (height != undefined) {
-                        sum_of_heights += height;
-                    }
-                };
-                let correct_h = `${30 + sum_of_heights}px`
-
-                if (add_block.style["max-height"] == correct_h) {
-                    add_block.style["max-height"] = "0px";
-                }
-                else {
-                    add_block.style["max-height"] = correct_h;
-                }
+                update_height_block(lesson_blocks[i]);
             }
             homework.onclick = function() {
                 tooltip.classList.add("_active");
@@ -129,12 +134,13 @@ function loadLessons(lessons) {
                     homework.innerHTML = "<b>Домашнее задание</b>: " + form.value;
                     tooltip.classList.remove("_active");
                     tooltip_back.classList.remove("_active");
+                    update_height_block(lesson_blocks[i]);
                 }
             }
         }
     }
     else {
-        main_table.innerHTML = "No lessons";
+        main_table.innerHTML = '<div class="no_lessons">Отдыхаем</div>';
     }
 }
 
