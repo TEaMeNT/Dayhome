@@ -127,7 +127,7 @@ function loadLessons(lessons) {
             homework.onclick = function() {
                 tooltip.classList.add("_active");
                 tooltip_back.classList.add("_active");
-                tooltip.childNodes[1].textContent = homework.textContent.substring(18);
+                tooltip.childNodes[1].value = homework.textContent.substring(18);
                 tooltip.childNodes[3].onclick = function() {
                     var data_to_send = [date_selector.value + " " + i, form.value];
                     sendJSON(JSON.stringify(data_to_send), "/api/homework_upd");
