@@ -109,7 +109,7 @@ function loadLessons(lessons) {
     if (lessons != null) {
         for (var i = 0; i < lessons.length; i++) {
             //console.log(main_table.childNodes);
-            main_table.insertAdjacentHTML('beforeend', `<div class="lesson_block"><div class="txt">${lessons[i][0]}</div><div class="type"></div><div class="add_block"><div class="descr"><b>Преподаватель</b>: ${lessons[i][2]}</div><div class="descr"><b>Домашнее задание</b>: none</div><div class="descr"><b>Можно пропускать: </b>Нет</div></div></div>`);
+            main_table.insertAdjacentHTML('beforeend', `<div class="lesson_block"><div class="txt">${lessons[i][0]}</div><div class="type"></div><div class="add_block"><div class="descr"><b>Преподаватель</b>: ${lessons[i][2]}</div><div class="descr"><b>Домашнее задание</b>:</div><div class="descr"><b>Можно пропускать: </b>Нет</div></div></div>`);
         }
         let lesson_blocks = document.getElementsByClassName("lesson_block");
         for (let i = 0; i < lesson_blocks.length; i++) {
@@ -155,7 +155,7 @@ function loadHomework() {
                 data = JSON.parse(xhr.responseText);
                 let lesson_blocks = document.getElementsByClassName("lesson_block");
                 for (let i = 0; i < data.length; i++) {
-                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1];
+                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1][0][0].replace(/\n/g, '<br>');
                 }
             }
         }

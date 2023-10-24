@@ -40,7 +40,9 @@ def get_day_homework():
     cur = db.cursor()
     homework = []
     for i in range(day[1]):
-        homework += [[i, cur.execute(f'''SELECT home_work FROM days WHERE day = "{day[0] + " " + str(i)}"''').fetchall()]]
+        hm = cur.execute(f'''SELECT home_work FROM days WHERE day = "{day[0] + " " + str(i)}"''').fetchall()
+        if (hm != []):
+            homework += [[i, hm]]
     cur.close()
     db.close()
     return json.dumps(homework)
