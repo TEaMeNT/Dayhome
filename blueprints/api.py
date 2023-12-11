@@ -12,10 +12,11 @@ def api_get_daily_lessons():
     schedule = cur.execute(f'''SELECT * FROM Schedule''').fetchall()
     dict = {}
     for day in schedule:
-        if(day[0] in dict.keys()):
-            dict[day[0]].append(day[1:])
+        a = day[2:] + (day[0], )
+        if(day[1] in dict.keys()):
+            dict[day[1]].append(a)
         else:
-            dict[day[0]] = [day[1:]]
+            dict[day[1]] = [a]
     cur.close()
     db.close()
     return json.dumps(dict)
@@ -47,13 +48,6 @@ def get_day_homework():
     db.close()
     return json.dumps(homework)
 
-@api_blueprint.route("/api/change_skip_mark", methods=['GET', 'POST'])
-def change_skip_mark():
-    skip_mark = int(json.loads(request.data))
-    db = sqlite3.connect('bases/DB.db')
-    cur = db.cursor()
-    cur.execute('INSERT INTO Schedule (day, home_work) VALUES (?, ?)', ())
-
 #os.chdir("../")
 @api_blueprint.route("/api/get_files_list", methods=['GET', 'POST'])
 def get_files_list():
@@ -67,3 +61,16 @@ def get_files_list():
         files_list += [files]
     
     return json.dumps(files_list)
+
+@api_blueprint.route("/api/skip_upd", methods=['GET', 'POST'])
+def skip_upd():
+    if request.method == "POST":
+        db = sqlite3.connect('bases/DB.db')
+        cur = db.cursor()
+        skip = json.loads(request.data)
+        print(skip)
+        cur.execute(f'UPDATE Schedule SET skip = {skip[1]} WHERE id = {skip[0]}')
+        db.commit()
+        cur.close()
+        db.close()
+    return ''

@@ -103,7 +103,7 @@ function update_height_block (lesson_block) {
     }
 }
 
-function loadLessons(lessons) {
+function loadLessons(lessons, day_count) {
     main_table.innerHTML = "";
     date_selector.value = current_date.current_str_date;
     if (lessons != null) {
@@ -121,6 +121,7 @@ function loadLessons(lessons) {
             }
             let add_block = lesson_blocks[i].childNodes[2];
             let homework = add_block.childNodes[1];
+            let skip = add_block.childNodes[2];
             lesson_blocks[i].firstChild.onclick = function () {
                 update_height_block(lesson_blocks[i]);
             }
@@ -128,6 +129,7 @@ function loadLessons(lessons) {
                 tooltip.classList.add("_active");
                 tooltip_back.classList.add("_active");
                 tooltip.childNodes[1].value = homework.textContent.substring(18);
+                console.log(homework.textContent.substring(18));
                 tooltip.childNodes[3].onclick = function() {
                     var data_to_send = [date_selector.value + " " + i, form.value];
                     sendJSON(JSON.stringify(data_to_send), "/api/homework_upd");
@@ -136,6 +138,17 @@ function loadLessons(lessons) {
                     tooltip_back.classList.remove("_active");
                     update_height_block(lesson_blocks[i]);
                 }
+            }
+            skip.onclick = function() {
+                console.log(day_count);
+                var data_to_send = [lessons[i][4], !lessons[i][3]];
+                if (!lessons[i][3]) {
+                    lesson_blocks[i].childNodes[2].childNodes[2].innerHTML = "<b>Можно пропускать: </b>Да";
+                }
+                else {
+                    lesson_blocks[i].childNodes[2].childNodes[2].innerHTML = "<b>Можно пропускать: </b>Нет";
+                }
+                sendJSON(JSON.stringify(data_to_send), "/api/skip_upd");        
             }
         }
     }
@@ -155,7 +168,7 @@ function loadHomework() {
                 data = JSON.parse(xhr.responseText);
                 let lesson_blocks = document.getElementsByClassName("lesson_block");
                 for (let i = 0; i < data.length; i++) {
-                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1][0][0].replace(/\n/g, '<br>');
+                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].textContent = "<b>Домашнее задание</b>: " + data[i][1][0][0];
                 }
             }
         }
@@ -165,6 +178,7 @@ function loadHomework() {
 loadJSON('api/api_get_daily_lessons',
     function(data) {
         let days = data;
+        console.log(days);
         current_date = new Day();
 
         date_selector.value = current_date.current_str_date;
@@ -173,23 +187,23 @@ loadJSON('api/api_get_daily_lessons',
         arrow_left.onclick = function() {
             current_date.change_day(-1);
             lessons = days[current_date.current_num_day];
-            loadLessons(lessons);
+            loadLessons(lessons, current_date.current_num_day);
             loadHomework();
         }
         arrow_right.onclick = function() {
             current_date.change_day(1);
             lessons = days[current_date.current_num_day];
-            loadLessons(lessons);
+            loadLessons(lessons, current_date.current_num_day);
             loadHomework();
         }
         date_selector.addEventListener('change', function(e) {
             current_date.change_day(datediff(parseDate(current_date.current_str_date), parseDate(this.value)));
             lessons = days[current_date.current_num_day];
-            loadLessons(lessons);
+            loadLessons(lessons, current_date.current_num_day);
             loadHomework();
         });
 
-        loadLessons(lessons);
+        loadLessons(lessons, current_date.current_num_day);
         loadHomework();
     }
 )
