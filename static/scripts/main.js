@@ -168,7 +168,7 @@ function loadHomework() {
                 data = JSON.parse(xhr.responseText);
                 let lesson_blocks = document.getElementsByClassName("lesson_block");
                 for (let i = 0; i < data.length; i++) {
-                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].textContent = "<b>Домашнее задание</b>: " + data[i][1][0][0];
+                    lesson_blocks[data[i][0]].childNodes[2].childNodes[1].innerHTML = "<b>Домашнее задание</b>: " + data[i][1][0][0];
                 }
             }
         }
