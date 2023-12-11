@@ -3,8 +3,8 @@ venv
 __pycache__
 .idea
 bases/*
-bases/login_password.db
-*login_password.db
+bases/DB.db
+*DB.db
 scripts
 log.txt
 bases/DB.db
